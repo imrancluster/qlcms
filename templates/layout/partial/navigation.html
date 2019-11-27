@@ -1,0 +1,79 @@
+<div class="section member-section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <nav class="navbar" role="navigation" aria-label="main navigation">
+                      <div class="navbar-brand">
+                        <a class="navbar-item" href="/dashboard/">
+                          DJANGO
+                        </a>
+
+                        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                          <span aria-hidden="true"></span>
+                          <span aria-hidden="true"></span>
+                          <span aria-hidden="true"></span>
+                        </a>
+                      </div>
+
+                      <div id="navbarBasicExample" class="navbar-menu">
+                        <div class="navbar-start">
+                          <a class="navbar-item" href="/dashboard/">
+                            Home
+                          </a>
+
+                          <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                              Menu
+                            </a>
+
+                            <div class="navbar-dropdown">
+                              <a href="/dashboard/members/" class="navbar-item">
+                                Member
+                              </a>
+                              <a class="navbar-item">
+                                Sadakaon
+                              </a>
+                              <a class="navbar-item">
+                                Contact
+                              </a>
+                              <hr class="navbar-divider">
+                              <a class="navbar-item">
+                                Report an issue
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="navbar-end">
+                          <div class="navbar-item">
+                            {% if user.is_authenticated %}
+                                    <p>Welcome, {{ user.get_username | upper }}</p>
+                            {% endif %}
+
+                          </div>
+                            <div class="navbar-item has-dropdown is-hoverable is-right">
+
+                                <a class="navbar-link">
+                                  <i class="far fa-user"></i>&nbsp;&nbsp; Profile
+                                </a>
+
+                                <div class="navbar-dropdown is-right">
+                                  <a href="/accounts/logout" class="navbar-item">Logout</a>
+                                  <a class="navbar-item">Profile Item1</a>
+                                  <a class="navbar-item">Profile Item2</a>
+                                  <hr class="navbar-divider">
+                                  <div class="navbar-item">
+                                    <a class="navbar-item">Profile Item3</a>
+                                  </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                      </div>
+                    </nav>
+                </div>
+            </div>
+            <hr>
+        </div>
+</div>

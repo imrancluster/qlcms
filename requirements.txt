@@ -1,0 +1,9 @@
+Django==2.2.7
+django-environ==0.4.5
+django-jet==1.0.8
+djangorestframework==3.10.3
+drf-nested-routers==0.91
+pytz==2019.3
+sqlparse==0.3.0
+psycopg2-binary==2.8.4
+sqlparse==0.3.0

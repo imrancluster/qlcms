@@ -1,0 +1,54 @@
+{% extends 'layout/base.html' %}
+{% block header %}
+    {% include 'layout/partial/navigation.html' %}
+{% endblock %}
+{% block body %}
+    <div class="section member-section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <table class="table is-fullwidth is-hoverable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                                <tr>
+                                    <td>{{ member.name }}</td>
+                                    <td>{{ member.phone }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if members.has_other_pages %}
+                        <nav class="pagination" role="navigation" aria-label="pagination">
+                        {% if members.has_previous %}
+                          <a class="pagination-previous" href="?page={{ members.previous_page_number }}">Previous</a>
+                        {% endif %}
+                        {% if members.has_next %}
+                          <a class="pagination-next" href="?page={{ members.next_page_number }}">Next page</a>
+                        {% endif %}
+
+                          <ul class="pagination-list">
+                              {% for i in members.paginator.page_range %}
+                                  {% if members.number == i %}
+                                    <li><a class="pagination-link is-current" aria-label="Goto page {{ i }}" aria-current="page">{{ i }}</a></li>
+                                  {% else %}
+                                      <li><a class="pagination-link" href="?page={{ i }}" aria-label="Goto page {{ i }}">{{ i }}</a></li>
+                                  {% endif %}
+                              {% endfor %}
+                          </ul>
+                        </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

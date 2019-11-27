@@ -1,0 +1,41 @@
+{% extends "layout/base.html" %}
+
+{% block body %}
+
+<div class="section login-section">
+    <div class="columns">
+        <div class="column column-conent-center">
+
+            <div class="login-form">
+                <h2 class="title">Sign In</h2>
+                {% if form.errors %}
+                    <div class="custom-login-error">Your username and password didn't match. Please try again.</div>
+                {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        <p>Your account doesn't have access to this page. To proceed,
+                        please login with an account that has access.</p>
+                    {% else %}
+                        <p>Please login to see this page.</p>
+                    {% endif %}
+                {% endif %}
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+                    <label for="fname">Username</label>
+                    {{ form.username }}
+
+                    <label for="lname">Password</label>
+                    {{ form.password }}
+
+                    <input type="submit" value="Login">
+                    <input type="hidden" name="next" value="{{ next }}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
