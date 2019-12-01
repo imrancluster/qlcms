@@ -1,10 +1,10 @@
-<div class="section member-section">
+<div class="member-section">
         <div class="container">
             <div class="columns">
                 <div class="column">
                     <nav class="navbar" role="navigation" aria-label="main navigation">
                       <div class="navbar-brand">
-                        <a class="navbar-item" href="/dashboard/">
+                        <a class="navbar-item" href="{% url 'dashboard' %}">
                           DJANGO
                         </a>
 
@@ -17,7 +17,7 @@
 
                       <div id="navbarBasicExample" class="navbar-menu">
                         <div class="navbar-start">
-                          <a class="navbar-item" href="/dashboard/">
+                          <a class="navbar-item" href="{% url 'dashboard' %}">
                             Home
                           </a>
 
@@ -27,7 +27,7 @@
                             </a>
 
                             <div class="navbar-dropdown">
-                              <a href="/dashboard/members/" class="navbar-item">
+                              <a href="{% url 'members' %}" class="navbar-item">
                                 Member
                               </a>
                               <a class="navbar-item">
@@ -63,7 +63,7 @@
                                   <a class="navbar-item">Profile Item2</a>
                                   <hr class="navbar-divider">
                                   <div class="navbar-item">
-                                    <a class="navbar-item">Profile Item3</a>
+                                    <a class="navbar-item"><small>Version: 0.01</small></a>
                                   </div>
                                 </div>
 

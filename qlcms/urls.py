@@ -35,4 +35,5 @@ urlpatterns = [
 
     # Members
     path('dashboard/members/', Members.as_view(), name='members'),
+    path('dashboard/members/create/', MemberCreateViews.as_view(), name='create_member'),
 ]
