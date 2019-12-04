@@ -1,10 +1,15 @@
-from django_filters import FilterSet
+import django_filters
+# from django_filters import filterset
 
 from people.models import Member
 
 
-class MemberFilter(FilterSet):
+class MemberFilter(django_filters.FilterSet):
 
     class Meta:
         model = Member
-        fields = ['name', 'registration_no', 'phone',]
+        fields = {
+            'name': ['icontains'],
+            'registration_no': ['exact'],
+            'phone': ['exact']
+        }
