@@ -17,7 +17,7 @@ class MemberForm(forms.ModelForm):
     phone = forms.CharField(min_length=11, max_length=13,
                            widget=forms.TextInput(attrs={'class': 'input'}))
     address_1 = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
-    address_2 = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
+    address_2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input'}))
     marital_status = forms.CharField(widget=forms.Select(choices=MARITAL_STATUS_CHOICES, attrs={'class': 'input'}))
     occupation = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
     blood_group = forms.CharField(widget=forms.Select(choices=BLOOD_GROUP_CHOICES, attrs={'class': 'input'}))

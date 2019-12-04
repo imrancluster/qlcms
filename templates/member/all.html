@@ -10,6 +10,14 @@
                     <div class="header">
                         <a href="{% url 'create_member' %}" class="button is-primary">Add new member</a>
                     </div>
+
+                    <div class="filter-section">
+                        <form method="get">
+                            {{ filter.form.as_p }}
+                            <button class="button is-info" type="submit">Search</button>
+                            <a class="button is-default" href="{% url 'members' %}">Reset</a>
+                        </form>
+                    </div>
                     <table class="table is-fullwidth is-hoverable">
                         <thead>
                             <tr>

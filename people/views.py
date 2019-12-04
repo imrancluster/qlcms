@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, UpdateView
 from django.urls import reverse
 
+from people.filters import MemberFilter
 from people.forms import MemberForm
 from people.models import Member, UserProfile
 
@@ -18,9 +19,12 @@ class Members(UserPassesTestMixin, TemplateView):
         branch_id = UserProfile.objects.filter(user=self.request.user)[0].branch.id
         member_list = Member.objects.filter(branch=branch_id).order_by('-pk')
 
+        # Django Filter
+        member_filter = MemberFilter(self.request.GET, queryset=member_list)
+
         page = self.request.GET.get('page', 1)
 
-        paginator = Paginator(member_list, 10)
+        paginator = Paginator(member_filter.qs, 5)
         try:
             members = paginator.page(page)
         except PageNotAnInteger:
@@ -30,7 +34,9 @@ class Members(UserPassesTestMixin, TemplateView):
 
         context = super().get_context_data(**kwargs)
 
+        # members with filtering, members.form.as_p will work
         context['members'] = members
+        context['filter'] = member_filter
         return context
 
     def test_func(self):
