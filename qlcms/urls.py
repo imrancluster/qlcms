@@ -36,4 +36,5 @@ urlpatterns = [
     # Members
     path('dashboard/members/', Members.as_view(), name='members'),
     path('dashboard/members/create/', MemberCreateViews.as_view(), name='create_member'),
+    path('dashboard/members/update/<int:pk>', MembeUpdateViews.as_view(), name='update_member'),
 ]

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 from django.urls import reverse
 
 from people.forms import MemberForm
@@ -16,7 +16,7 @@ class Members(UserPassesTestMixin, TemplateView):
     def get_context_data(self, **kwargs):
 
         branch_id = UserProfile.objects.filter(user=self.request.user)[0].branch.id
-        member_list = Member.objects.filter(branch=branch_id)
+        member_list = Member.objects.filter(branch=branch_id).order_by('-pk')
 
         page = self.request.GET.get('page', 1)
 
@@ -42,6 +42,11 @@ class MemberCreateViews(UserPassesTestMixin, CreateView):
     template_name = 'member/create.html'
     form_class = MemberForm
 
+    def get_context_data(self, **kwargs):
+        context = super(MemberCreateViews, self).get_context_data(**kwargs)
+        context['view_form_title'] = "Add new member"
+        return context
+
     def test_func(self):
         return self.request.user.has_perm('people.add_member')
 
@@ -49,6 +54,23 @@ class MemberCreateViews(UserPassesTestMixin, CreateView):
         branch_id = UserProfile.objects.filter(user=self.request.user)[0].branch.id
         form.save(branch_id)
         return super(MemberCreateViews, self).form_valid(form)
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse("members")
+
+class MembeUpdateViews(UserPassesTestMixin, UpdateView):
+    # class view will automatically create context = member
+    model = Member
+    template_name = 'member/create.html'
+    form_class = MemberForm
+
+    def get_context_data(self, **kwargs):
+        context = super(MembeUpdateViews, self).get_context_data(**kwargs)
+        context['view_form_title'] = "Update Member"
+        return context
+
+    def test_func(self):
+        return self.request.user.has_perm('people.change_member')
 
     def get_success_url(self, *args, **kwargs):
         return reverse("members")

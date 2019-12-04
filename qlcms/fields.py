@@ -35,3 +35,5 @@ MEMBER_TYPE_CHOICES = [
     ('QG', 'QG'),
     ('QA', 'QA'),
 ]
+
+YEARS= [x for x in range(1940, 2021)]
