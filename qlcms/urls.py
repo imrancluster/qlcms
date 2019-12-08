@@ -37,4 +37,6 @@ urlpatterns = [
     path('dashboard/members/', Members.as_view(), name='members'),
     path('dashboard/members/create/', MemberCreateViews.as_view(), name='create_member'),
     path('dashboard/members/update/<int:pk>', MembeUpdateViews.as_view(), name='update_member'),
+    path('dashboard/members/delete/<int:pk>', MembeDeleteViews.as_view(), name='delete_member'),
+    path('dashboard/members/show/<int:pk>', MemberDetailViews.as_view(), name='detail_member'),
 ]

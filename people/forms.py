@@ -34,10 +34,12 @@ class MemberForm(forms.ModelForm):
                   'address_1', 'address_2', 'marital_status', 'occupation', 'blood_group', 'email',
                   'reference_name', 'additional_info', 'status')
 
-    def save(self, branch_id=None):
+    def save(self, branch_id=None, user_id = None):
         member = super(MemberForm, self).save(commit=False)
         if branch_id:
             member.branch_id = branch_id
+        if user_id:
+            member.user_id = user_id
         member.save()
 
         return member

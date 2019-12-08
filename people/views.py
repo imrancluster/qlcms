@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse
 
 from people.filters import MemberFilter
@@ -15,7 +15,6 @@ class Members(UserPassesTestMixin, TemplateView):
     template_name = 'member/all.html'
 
     def get_context_data(self, **kwargs):
-
         branch_id = UserProfile.objects.filter(user=self.request.user)[0].branch.id
         member_list = Member.objects.filter(branch=branch_id).order_by('-pk')
 
@@ -58,7 +57,7 @@ class MemberCreateViews(UserPassesTestMixin, CreateView):
 
     def form_valid(self, form):
         branch_id = UserProfile.objects.filter(user=self.request.user)[0].branch.id
-        form.save(branch_id)
+        form.save(branch_id, self.request.user.pk)
         return super(MemberCreateViews, self).form_valid(form)
 
     def get_success_url(self, *args, **kwargs):
@@ -81,3 +80,19 @@ class MembeUpdateViews(UserPassesTestMixin, UpdateView):
     def get_success_url(self, *args, **kwargs):
         return reverse("members")
 
+class MembeDeleteViews(UserPassesTestMixin, DeleteView):
+    model = Member
+    template_name = 'member/delete.html'
+
+    def test_func(self):
+        return self.request.user.has_perm('people.delete_member')
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse("members")
+
+class MemberDetailViews(UserPassesTestMixin, DetailView):
+    model = Member
+    template_name = 'member/show.html'
+
+    def test_func(self):
+        return self.request.user.has_perm('people.view_member')

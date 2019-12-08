@@ -22,6 +22,11 @@ class Member(models.Model):
     additional_info = models.TextField(blank=True)
     status = models.BooleanField(default=True)
 
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
     @staticmethod
     def autocomplete_search_fields():
         return 'name',
