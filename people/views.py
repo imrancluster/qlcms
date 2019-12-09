@@ -94,5 +94,7 @@ class MemberDetailViews(UserPassesTestMixin, DetailView):
     model = Member
     template_name = 'member/show.html'
 
+
+
     def test_func(self):
         return self.request.user.has_perm('people.view_member')

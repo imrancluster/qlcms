@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.safestring import mark_safe
 
 from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES
 
@@ -23,6 +24,8 @@ class Member(models.Model):
     status = models.BooleanField(default=True)
 
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    avatar = models.ImageField(upload_to='images/', blank=True)
+    # default = 'pic_folder/None/no-img.jpg'
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)

@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'matirbank.apps.MatirbankConfig',
     'geography.apps.GeographyConfig',
     'people.apps.PeopleConfig',
+    'events.apps.EventsConfig',
 ]
 
 MIDDLEWARE = [
@@ -147,6 +148,9 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+
 JET_DEFAULT_THEME = 'default'
 
 JET_SIDE_MENU_COMPACT = True
@@ -194,6 +198,10 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
     ]},
     {'label': _('Members'), 'items': [
         {'name': 'people.member'},
+    ]},
+    {'label': _('Events'), 'items': [
+        {'name': 'events.programtype'},
+        {'name': 'events.program'},
     ]},
     {'label': _('Geography'), 'items': [
         {'name': 'geography.branch'},

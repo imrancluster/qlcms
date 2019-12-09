@@ -15,10 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.template.context_processors import media
 from django.urls import path
+
+from django.conf.urls.static import static
 
 from django.contrib.auth.views import LoginView
 
+from events.views import ProgramCreateViews, Programs, ProgramUpdateViews, ProgramDeleteViews, ProgramDetailViews, \
+    handle_program_attendance
+from qlcms import settings
 from . import views
 from people.views import *
 
@@ -39,4 +45,15 @@ urlpatterns = [
     path('dashboard/members/update/<int:pk>', MembeUpdateViews.as_view(), name='update_member'),
     path('dashboard/members/delete/<int:pk>', MembeDeleteViews.as_view(), name='delete_member'),
     path('dashboard/members/show/<int:pk>', MemberDetailViews.as_view(), name='detail_member'),
-]
+
+
+    # Events
+    path('dashboard/programs/', Programs.as_view(), name='programs'),
+    path('dashboard/programs/create/', ProgramCreateViews.as_view(), name='create_program'),
+    path('dashboard/programs/update/<int:pk>', ProgramUpdateViews.as_view(), name='update_program'),
+    path('dashboard/programs/delete/<int:pk>', ProgramDeleteViews.as_view(), name='delete_program'),
+    path('dashboard/programs/show/<int:pk>', ProgramDetailViews.as_view(), name='detail_program'),
+    path('handle-program-attendance/', handle_program_attendance, name='program_attendance'),
+
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

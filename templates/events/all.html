@@ -8,7 +8,7 @@
             <div class="columns">
                 <div class="column">
                     <div class="header">
-                        <a href="{% url 'create_member' %}" class="button is-primary">Add new member</a>
+                        <a href="{% url 'create_program' %}" class="button is-primary">Add new program</a>
                     </div>
 
                     <div class="filter-section">
@@ -21,45 +21,33 @@
                     <table class="table is-fullwidth is-hoverable">
                         <thead>
                             <tr>
-                                <th>Photo</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Reg.No</th>
-                                <th>Blood Group</th>
+                                <th>Title</th>
+                                <th>Type</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for member in members %}
+                            {% for program in programs %}
                                 <tr>
+                                    <td>{{ program.title }}</td>
+                                    <td>{{ program.type }}</td>
+                                    <td>{{ program.status }}</td>
                                     <td>
-                                        {% if member.avatar %}
-                                            <img width="50px" src="{{ member.avatar.url }}" alt="{{ member.name }}">
-                                        {% else %}
-                                            <img width="50px" src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ member.name }}</td>
-                                    <td>{{ member.phone }}</td>
-                                    <td>{{ member.registration_no }}</td>
-                                    <td>{{ member.blood_group }}</td>
-                                    <td>{{ member.status }}</td>
-                                    <td>
-                                        <a href="{% url 'detail_member' member.id %}">
+                                        <a href="{% url 'detail_program' program.id %}">
                                             <span class="icon has-text-info">
                                                 <i class="fas fa-eye"></i>
                                             </span>
                                         </a>
-                                        {% if perms.people.change_member %}
-                                            <a href="{% url 'update_member' member.id %}">
+                                        {% if perms.events.change_program %}
+                                            <a href="{% url 'update_program' program.id %}">
                                                 <span class="icon has-text-info">
                                                     <i class="fas fa-edit"></i>
                                                 </span>
                                             </a>
                                         {% endif %}
-                                        {% if perms.people.delete_member %}
-                                            <a href="{% url 'delete_member' member.id %}">
+                                        {% if perms.events.delete_program %}
+                                            <a href="{% url 'delete_program' program.id %}">
                                                 <span class="icon has-text-danger">
                                                     <i class="fas fa-minus-circle"></i>
                                                 </span>
@@ -71,18 +59,18 @@
                         </tbody>
                     </table>
 
-                    {% if members.has_other_pages %}
+                    {% if programs.has_other_pages %}
                         <nav class="pagination" role="navigation" aria-label="pagination">
-                        {% if members.has_previous %}
-                          <a class="pagination-previous" href="?page={{ members.previous_page_number }}">Previous</a>
+                        {% if programs.has_previous %}
+                          <a class="pagination-previous" href="?page={{ programs.previous_page_number }}">Previous</a>
                         {% endif %}
-                        {% if members.has_next %}
-                          <a class="pagination-next" href="?page={{ members.next_page_number }}">Next page</a>
+                        {% if programs.has_next %}
+                          <a class="pagination-next" href="?page={{ programs.next_page_number }}">Next page</a>
                         {% endif %}
 
                           <ul class="pagination-list">
-                              {% for i in members.paginator.page_range %}
-                                  {% if members.number == i %}
+                              {% for i in programs.paginator.page_range %}
+                                  {% if programs.number == i %}
                                     <li><a class="pagination-link is-current" aria-label="Goto page {{ i }}" aria-current="page">{{ i }}</a></li>
                                   {% else %}
                                       <li><a class="pagination-link" href="?page={{ i }}" aria-label="Goto page {{ i }}">{{ i }}</a></li>

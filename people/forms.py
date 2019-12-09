@@ -1,8 +1,17 @@
+from string import Template
+
 from django import forms
+from django.utils.safestring import mark_safe
 
 from people.models import Member
+from qlcms import settings
 from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES, YEARS
 
+
+class PictureWidget(forms.widgets.Widget):
+    def render(self, name, value, attrs=None, **kwargs):
+        html =  Template("""<img src="/media/$link"/>""")
+        return mark_safe(html.substitute(link=value))
 
 class MemberForm(forms.ModelForm):
     name = forms.CharField(min_length=2,
@@ -24,18 +33,24 @@ class MemberForm(forms.ModelForm):
     email = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
     reference_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
     additional_info = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'input'}))
-
-
+    # avatar = forms.ImageField(widget=PictureWidget)
 
 
     class Meta:
         model = Member
         fields = ('name', 'member_type', 'registration_no', 'gender', 'date_of_birth', 'phone',
                   'address_1', 'address_2', 'marital_status', 'occupation', 'blood_group', 'email',
-                  'reference_name', 'additional_info', 'status')
+                  'reference_name', 'additional_info', 'status', 'avatar')
 
     def save(self, branch_id=None, user_id = None):
         member = super(MemberForm, self).save(commit=False)
+
+        # avatar image file
+        # image = Image.open(photo.file)
+        # cropped_image = image.crop((x, y, w + x, h + y))
+        # resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+        # resized_image.save(photo.file.path)
+
         if branch_id:
             member.branch_id = branch_id
         if user_id:

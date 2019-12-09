@@ -1,0 +1,59 @@
+{% extends 'layout/base.html' %}
+{% block header %}
+    {% include 'layout/partial/navigation.html' %}
+{% endblock %}
+{% block body %}
+<div class="member-section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-half">
+
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="media">
+                          <div class="media-content">
+                            <p class="title is-4">{{ program.title}}</p>
+                            <p class="subtitle is-6">{{ program.place}}</p>
+                          </div>
+                        </div>
+
+                        <div class="content">
+                          {{ program.additional_info }}
+                          <br>
+                          <time datetime="2016-1-1">{{ program.created_on }}</time>
+                        </div>
+                      </div>
+
+                      <footer class="card-footer">
+                        <a href="{% url 'programs' %}" class="card-footer-item">Back</a>
+                        <a href="{% url 'update_program' program.id %}" class="card-footer-item">Edit</a>
+                        <a href="{% url 'delete_program' program.id %}" class="card-footer-item">Delete</a>
+                      </footer>
+                    </div>
+
+
+                    <h3 class="title">Members</h3>
+                    <hr>
+                    <form action="/handle-program-attendance/" method="post">
+                        {% csrf_token %}
+
+                        {% for member in members %}
+                            {{ member.name }} <input
+                                type="checkbox"
+                                class="checkbox"
+                                name="attendance"
+                                value="{{ member.id }}" {% if member.id in member_attended %} checked {% endif %}>
+                            <br>
+                        {% endfor %}
+
+                        <input type="hidden" name="program_id" value="{{ program.id }}">
+
+                        <input class="button is-primary" type="submit" value="Add">
+                    </form>
+
+                    {{ member_attended }}
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

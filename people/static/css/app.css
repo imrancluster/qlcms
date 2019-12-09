@@ -47,3 +47,7 @@ body, button, input, select, textarea {
     border-radius: 5px;
 }
 /** End Login Form */
+
+.member-section .member-create-submit {
+    margin-top: 30px;
+}

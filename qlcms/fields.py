@@ -37,3 +37,8 @@ MEMBER_TYPE_CHOICES = [
 ]
 
 YEARS= [x for x in range(1940, 2021)]
+
+PROGRAM_STATUS = [
+    ('OPEN', _('OPEN')),
+    ('CLOSED', _('CLOSED')),
+]
