@@ -4,6 +4,10 @@ body, button, input, select, textarea {
     font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, SiyamRupali, sans-serif;
 }
 
+.title {
+    margin-bottom: 20px;
+}
+
 /** Start Login Form */
 .login-section .column-conent-center {
     display: flex;
@@ -49,5 +53,25 @@ body, button, input, select, textarea {
 /** End Login Form */
 
 .member-section .member-create-submit {
-    margin-top: 30px;
+    margin-top: 25px;
+}
+.filter-section {
+    margin: 20px 0;
+    width: 400px;
+}
+.filter-section form label {
+    width: 150px;
+    display: inline-block;
+}
+.filter-section form select, .filter-section form input {
+    width: 200px;
+    height: 30px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.program-header-bg {
+    background-color: #c7ecee;
+    height: 200px;
+    padding: 50px 0;
 }

@@ -3,41 +3,81 @@
     {% include 'layout/partial/navigation.html' %}
 {% endblock %}
 {% block body %}
+
 <div class="member-section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-half">
+    <div class="container">
+        <div class="columns is-mobile">
+          <div class="column">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-128x128">
+                    {% if member.avatar %}
+                        <img class="is-rounded" width="50px" src="{{ member.avatar.url }}" alt="{{ member.name }}">
+                    {% else %}
+                        <img class="is-rounded" width="50px" src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                    {% endif %}
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">{{ member.name}}</p>
+                <p class="subtitle is-6">
+                    <i class="far fa-envelope"></i> {{ member.email }}
+                    <br>
+                    <i class="fas fa-mobile-alt"></i> {{ member.phone }}
+                    <br>
+                    <br>
+                    {% if member.additional_info %}
+                        {{ member.additional_info}}
+                    {% endif %}
+                </p>
+                <p class="title is-4"><a href="{% url 'update_member' member.id %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-user-edit"></i></a></p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                    <div class="card">
-                      <div class="card-content">
-                        <div class="media">
-                          <div class="media-left">
-                            <figure class="image is-48x48">
-                              <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                            </figure>
-                          </div>
-                          <div class="media-content">
-                            <p class="title is-4">{{ member.name}}</p>
-                            <p class="subtitle is-6">{{ member.email}}</p>
-                          </div>
-                        </div>
-
-                        <div class="content">
-                          {{ member.additional_info }}
-                          <br>
-                          <time datetime="2016-1-1">{{ member.created_on }}</time>
-                        </div>
-                      </div>
-
-                      <footer class="card-footer">
-                        <a href="{% url 'members' %}" class="card-footer-item">Back</a>
-                        <a href="{% url 'update_member' member.id %}" class="card-footer-item">Edit</a>
-                        <a href="{% url 'delete_member' member.id %}" class="card-footer-item">Delete</a>
-                      </footer>
-                    </div>
-
+        <div class="columns is-mobile">
+            <div class="column">
+                <div class="content is-small">
+                    <p><i class="fas fa-map-marker-alt"></i> Bangladesh</p>
+                    <p>
+                        <i class="far fa-calendar-alt"></i> Joined May 2011
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>331</strong> Programs
+                    </p>
                 </div>
             </div>
         </div>
+
+        <div class="columns is-mobile">
+            <div class="column">
+                <div class="tabs">
+                  <ul>
+                    <li class="tab is-active" onclick="openTab(event,'History')"><a>History</a></li>
+                    <li class="tab" onclick="openTab(event,'Sadakayon')"><a>Sadakayon</a></li>
+                    <li class="tab" onclick="openTab(event,'Others')"><a>Others</a></li>
+                  </ul>
+                </div>
+                <div class="container">
+                    <div id="History" class="content-tab" >
+                      <p>
+                        History Content
+                      </p>
+                    </div>
+                    <div id="Sadakayon" class="content-tab" style="display:none">
+                        <p>
+                            Sadakayon Content
+                        </p>
+                    </div>
+                    <div id="Others" class="content-tab" style="display:none">
+                        <p>
+                            Others Content
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 {% endblock %}

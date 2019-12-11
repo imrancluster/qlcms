@@ -8,14 +8,16 @@
             <div class="columns">
                 <div class="column">
                     <div class="header">
-                        <a href="{% url 'create_program' %}" class="button is-primary">Add new program</a>
+                        <a href="{% url 'create_program' %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-plus-circle"></i></a>
                     </div>
 
                     <div class="filter-section">
                         <form method="get">
                             {{ filter.form.as_p }}
-                            <button class="button is-info" type="submit">Search</button>
-                            <a class="button is-default" href="{% url 'members' %}">Reset</a>
+                            <div class="member-create-submit">
+                                <button class="button is-info" type="submit">Search</button>
+                                <a class="button is-default" href="{% url 'members' %}">Reset</a>
+                            </div>
                         </form>
                     </div>
                     <table class="table is-fullwidth is-hoverable">

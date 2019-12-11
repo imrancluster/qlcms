@@ -8,14 +8,16 @@
             <div class="columns">
                 <div class="column">
                     <div class="header">
-                        <a href="{% url 'create_member' %}" class="button is-primary">Add new member</a>
+                        <a href="{% url 'create_member' %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-plus-circle"></i></a>
                     </div>
 
                     <div class="filter-section">
                         <form method="get">
                             {{ filter.form.as_p }}
-                            <button class="button is-info" type="submit">Search</button>
-                            <a class="button is-default" href="{% url 'members' %}">Reset</a>
+                            <div class="member-create-submit">
+                                <button class="button is-info" type="submit">Search</button>
+                                <a class="button is-default" href="{% url 'members' %}">Reset</a>
+                            </div>
                         </form>
                     </div>
                     <table class="table is-fullwidth is-hoverable">
@@ -44,7 +46,13 @@
                                     <td>{{ member.phone }}</td>
                                     <td>{{ member.registration_no }}</td>
                                     <td>{{ member.blood_group }}</td>
-                                    <td>{{ member.status }}</td>
+                                    <td>
+                                        {% if member.status == True %}
+                                            <span class="has-text-success"><i class="far fa-smile"></i></span>
+                                        {% else %}
+                                            <span class="has-text-warning"><i class="fas fa-praying-hands"></i></span>
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <a href="{% url 'detail_member' member.id %}">
                                             <span class="icon has-text-info">
