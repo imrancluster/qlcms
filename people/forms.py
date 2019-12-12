@@ -4,6 +4,7 @@ from django import forms
 from django.utils.safestring import mark_safe
 
 from people.models import Member
+from people.utils import get_quantum_associate_id
 from qlcms import settings
 from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES, YEARS
 
@@ -17,8 +18,7 @@ class MemberForm(forms.ModelForm):
     name = forms.CharField(min_length=2,
                            widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Enter your name'}))
     member_type = forms.CharField(widget=forms.Select(choices=MEMBER_TYPE_CHOICES, attrs={'class': 'input'}))
-    registration_no = forms.CharField(min_length=2,
-                           widget=forms.TextInput(attrs={'class': 'input'}))
+    registration_no = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input'}))
     gender = forms.CharField(widget=forms.Select(choices=GENDER_CHOICES, attrs={'class': 'input'}))
 
     date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=YEARS))
@@ -40,7 +40,7 @@ class MemberForm(forms.ModelForm):
         model = Member
         fields = ('name', 'member_type', 'registration_no', 'gender', 'date_of_birth', 'phone',
                   'address_1', 'address_2', 'marital_status', 'occupation', 'blood_group', 'email',
-                  'reference_name', 'additional_info', 'status', 'avatar')
+                  'reference_name', 'additional_info', 'status', 'is_quantier', 'avatar')
 
     def save(self, branch_id=None, user_id = None):
         member = super(MemberForm, self).save(commit=False)
@@ -51,10 +51,14 @@ class MemberForm(forms.ModelForm):
         # resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
         # resized_image.save(photo.file.path)
 
+        # TODO: avoid following function if this form is a update form
         if branch_id:
             member.branch_id = branch_id
         if user_id:
             member.user_id = user_id
+
+        if member.member_type == "QA" and member.registration_no == "":
+            member.registration_no = str(branch_id)+str(get_quantum_associate_id(branch_id))
         member.save()
 
         return member

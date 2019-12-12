@@ -22,7 +22,7 @@ class Member(models.Model):
     reference_name = models.CharField(max_length=150)
     additional_info = models.TextField(blank=True)
     status = models.BooleanField(default=True)
-
+    is_quantier = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     avatar = models.ImageField(upload_to='images/', blank=True)
     # default = 'pic_folder/None/no-img.jpg'

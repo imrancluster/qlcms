@@ -36,6 +36,7 @@ class Members(UserPassesTestMixin, TemplateView):
         # members with filtering, members.form.as_p will work
         context['members'] = members
         context['filter'] = member_filter
+        context['form_type'] = 'new-form'
         return context
 
     def test_func(self):
@@ -72,6 +73,7 @@ class MembeUpdateViews(UserPassesTestMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(MembeUpdateViews, self).get_context_data(**kwargs)
         context['view_form_title'] = "Update Member"
+        context['form_type'] = 'update-form'
         return context
 
     def test_func(self):

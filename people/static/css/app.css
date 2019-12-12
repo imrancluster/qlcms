@@ -75,3 +75,5 @@ body, button, input, select, textarea {
     height: 200px;
     padding: 50px 0;
 }
+
+ul.errorlist {color: brown;}
