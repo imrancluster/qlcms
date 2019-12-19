@@ -9,6 +9,7 @@ from django.urls import reverse
 from people.filters import MemberFilter
 from people.forms import MemberForm
 from people.models import Member, UserProfile
+from qlcms.utils import get_custom_paginator
 
 
 class Members(UserPassesTestMixin, TemplateView):
@@ -21,20 +22,10 @@ class Members(UserPassesTestMixin, TemplateView):
         # Django Filter
         member_filter = MemberFilter(self.request.GET, queryset=member_list)
 
-        page = self.request.GET.get('page', 1)
-
-        paginator = Paginator(member_filter.qs, 5)
-        try:
-            members = paginator.page(page)
-        except PageNotAnInteger:
-            members = paginator.page(1)
-        except EmptyPage:
-            members = paginator.page(paginator.num_pages)
-
         context = super().get_context_data(**kwargs)
 
         # members with filtering, members.form.as_p will work
-        context['members'] = members
+        context['members'] = get_custom_paginator(member_filter.qs, self.request, 10)
         context['filter'] = member_filter
         context['form_type'] = 'new-form'
         return context

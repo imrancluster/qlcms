@@ -1,5 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 
+from events.models import Program
 from people.models import Member
 
 

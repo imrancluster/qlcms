@@ -10,7 +10,10 @@ from django.urls import reverse
 from events.filters import ProgramFilter
 from events.forms import ProgramForm
 from events.models import Program
+from people.filters import MemberFilter
 from people.models import UserProfile, Member
+from events.utils import get_presence_members_by_program_id, get_presence_member_ids_by_program_id, get_program_history
+from qlcms.utils import get_custom_paginator, my_reverse
 
 
 class Programs(UserPassesTestMixin, TemplateView):
@@ -23,20 +26,10 @@ class Programs(UserPassesTestMixin, TemplateView):
         # Django Filter
         program_filter = ProgramFilter(self.request.GET, queryset=program_list)
 
-        page = self.request.GET.get('page', 1)
-
-        paginator = Paginator(program_filter.qs, 5)
-        try:
-            programs = paginator.page(page)
-        except PageNotAnInteger:
-            programs = paginator.page(1)
-        except EmptyPage:
-            programs = paginator.page(paginator.num_pages)
-
         context = super().get_context_data(**kwargs)
 
         # programs with filtering, programs.form.as_p will work
-        context['programs'] = programs
+        context['programs'] = get_custom_paginator(program_filter.qs, self.request, 10)
         context['filter'] = program_filter
         return context
 
@@ -111,14 +104,27 @@ class ProgramDetailViews(UserPassesTestMixin, DetailView):
     def get_context_data(self, **kwargs):
         branch_id = UserProfile.objects.filter(user=self.request.user)[0].branch.id
         context = super(ProgramDetailViews, self).get_context_data(**kwargs)
-        context['members'] = Member.objects.filter(branch_id=branch_id)
+
+        """
+            Member search section
+            List of all absence members
+        """
+        member_list = Member.objects.filter(branch=branch_id).order_by('-pk')
+
+        # Django Filter
+        member_filter = MemberFilter(self.request.GET, queryset=member_list)
+        context['members'] = get_custom_paginator(member_filter.qs, self.request, 5)
+        context['filter'] = member_filter
+
+        member_attended = get_presence_members_by_program_id(self.kwargs.get('pk'))
+        context['member_attended'] = member_attended
 
         attended = []
-        member_attended = Program.objects.get(id=self.kwargs.get('pk')).members.all()
         for member in member_attended:
             attended.append(member.id)
-
-        context['member_attended'] = attended
+        context['member_attended_ids'] = attended
+        context['program_history'] = get_program_history(self.kwargs.get('pk'))
+        # context['all_programs'] = Program.get_all_members(self.kwargs.get('pk'))
 
         return context
 
@@ -129,16 +135,16 @@ class ProgramDetailViews(UserPassesTestMixin, DetailView):
 def handle_program_attendance(request: HttpRequest):
     program_id = None
     if request.method == "POST":
-
         member_ids = request.POST.getlist('attendance')
+        remove_members = request.POST.getlist('remove_members')
         program_id = request.POST['program_id']
         program = Program.objects.get(pk=program_id)
 
-        member_attended = Program.objects.get(id=program_id).members.all()
+        # member_attended = Program.objects.get(id=program_id).members.all()
 
         # remove previous attendance
-        for m in member_attended:
-            member = Member.objects.get(pk=m.id)
+        for id in remove_members:
+            member = Member.objects.get(pk=id)
             program.members.remove(member)
 
         # add attendance
@@ -146,4 +152,11 @@ def handle_program_attendance(request: HttpRequest):
             member = Member.objects.get(pk=id)
             program.members.add(member)
 
-    return HttpResponseRedirect(reverse('detail_program', kwargs={'pk':program_id}))
+    return HttpResponseRedirect(
+        my_reverse(
+            'detail_program',
+            kwargs={'pk':program_id},
+            query_kwargs={
+                'page': request.GET.get('page')
+            }
+        ))

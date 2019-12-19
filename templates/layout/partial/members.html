@@ -1,0 +1,84 @@
+<div class="filter-section">
+    <form method="get">
+        {{ filter.form.as_p }}
+        <div class="member-create-submit">
+            <button class="button is-info" type="submit">Search</button>
+            <a class="button is-default" href="{% url 'detail_program' program.pk %}">Reset</a>
+        </div>
+    </form>
+</div>
+
+<form action="/handle-program-attendance/?page={{ request.GET.page }}" method="post">
+    {% csrf_token %}
+
+<input type="hidden" name="program_id" value="{{ program.id }}">
+<input class="button is-primary" type="submit" value="Add Selected Members">
+
+<table class="table is-fullwidth is-hoverable">
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="seelctAllMember"></th>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Reg.No</th>
+            <th>M.Type</th>
+            <th>Gender</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in members %}
+            <tr>
+                <td>
+                    <input
+                    type="checkbox"
+                    class="checkbox"
+                    name="attendance"
+                    value="{{ member.id }}" {% if member.id in member_attended_ids %} checked {% endif %}>
+                </td>
+                <td>
+                    {% if member.avatar %}
+                        <img width="50px" src="{{ member.avatar.url }}" alt="{{ member.name }}">
+                    {% else %}
+                        <img width="50px" src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                    {% endif %}
+                </td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.phone }}</td>
+                <td>{{ member.registration_no }}</td>
+                <td>{{ member.member_type }}</td>
+                <td>{{ member.gender }}</td>
+                <td>
+                    {% if member.status == True %}
+                        <span class="has-text-success"><i class="far fa-smile"></i></span>
+                    {% else %}
+                        <span class="has-text-warning"><i class="fas fa-praying-hands"></i></span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if members.has_other_pages %}
+    <nav class="pagination" role="navigation" aria-label="pagination">
+    {% if members.has_previous %}
+      <a class="pagination-previous" href="?page={{ members.previous_page_number }}">Previous</a>
+    {% endif %}
+    {% if members.has_next %}
+      <a class="pagination-next" href="?page={{ members.next_page_number }}">Next page</a>
+    {% endif %}
+
+      <ul class="pagination-list">
+          {% for i in members.paginator.page_range %}
+              {% if members.number == i %}
+                <li><a class="pagination-link is-current" aria-label="Goto page {{ i }}" aria-current="page">{{ i }}</a></li>
+              {% else %}
+                  <li><a class="pagination-link" href="?page={{ i }}" aria-label="Goto page {{ i }}">{{ i }}</a></li>
+              {% endif %}
+          {% endfor %}
+      </ul>
+    </nav>
+{% endif %}
+</form>

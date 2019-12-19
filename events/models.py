@@ -34,6 +34,10 @@ class Program(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    @classmethod
+    def get_all_members(cls, pk):
+        return cls.objects.get(id=pk).members.all()
+
     @staticmethod
     def autocomplete_search_fields():
         return 'title',

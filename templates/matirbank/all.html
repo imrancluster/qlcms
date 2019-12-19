@@ -8,7 +8,7 @@
             <div class="columns">
                 <div class="column">
                     <div class="header">
-                        <a href="{% url 'create_program' %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-plus-circle"></i></a>
+                        <a href="{% url 'create_bank' %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-plus-circle"></i></a>
                     </div>
 
                     <div class="filter-section">
@@ -16,40 +16,48 @@
                             {{ filter.form.as_p }}
                             <div class="member-create-submit">
                                 <button class="button is-info" type="submit">Search</button>
-                                <a class="button is-default" href="{% url 'programs' %}">Reset</a>
+                                <a class="button is-default" href="{% url 'members' %}">Reset</a>
                             </div>
                         </form>
                     </div>
                     <table class="table is-fullwidth is-hoverable">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Type</th>
+                                <th>Bank Code</th>
+                                <th>Distribution date</th>
+                                <th>Collection date</th>
+                                <th>Member</th>
+                                <th>Amount</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for program in programs %}
+                            {% for bank in banks %}
                                 <tr>
-                                    <td>{{ program.title }}</td>
-                                    <td>{{ program.type }}</td>
-                                    <td>{{ program.status }}</td>
+                                    <td>{{ bank.bank_code }}</td>
+                                    <td>{{ bank.distribution_date }}</td>
+                                    <td>{{ bank.collection_date }}</td>
+                                    <td><a href="{% url 'detail_member' bank.member.pk %}">{{ bank.member.name }}</a></td>
+                                    <td>{{ bank.amount }}</td>
                                     <td>
-                                        <a href="{% url 'detail_program' program.id %}">
+                                        {{ bank.status }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'detail_member' bank.id %}">
                                             <span class="icon has-text-info">
                                                 <i class="fas fa-eye"></i>
                                             </span>
                                         </a>
-                                        {% if perms.events.change_program %}
-                                            <a href="{% url 'update_program' program.id %}">
+                                        {% if perms.people.change_member %}
+                                            <a href="{% url 'update_member' bank.id %}">
                                                 <span class="icon has-text-info">
                                                     <i class="fas fa-edit"></i>
                                                 </span>
                                             </a>
                                         {% endif %}
-                                        {% if perms.events.delete_program %}
-                                            <a href="{% url 'delete_program' program.id %}">
+                                        {% if perms.people.delete_member %}
+                                            <a href="{% url 'delete_member' bank.id %}">
                                                 <span class="icon has-text-danger">
                                                     <i class="fas fa-minus-circle"></i>
                                                 </span>
@@ -61,18 +69,18 @@
                         </tbody>
                     </table>
 
-                    {% if programs.has_other_pages %}
+                    {% if banks.has_other_pages %}
                         <nav class="pagination" role="navigation" aria-label="pagination">
-                        {% if programs.has_previous %}
-                          <a class="pagination-previous" href="?page={{ programs.previous_page_number }}">Previous</a>
+                        {% if banks.has_previous %}
+                          <a class="pagination-previous" href="?page={{ banks.previous_page_number }}">Previous</a>
                         {% endif %}
-                        {% if programs.has_next %}
-                          <a class="pagination-next" href="?page={{ programs.next_page_number }}">Next page</a>
+                        {% if banks.has_next %}
+                          <a class="pagination-next" href="?page={{ banks.next_page_number }}">Next page</a>
                         {% endif %}
 
                           <ul class="pagination-list">
-                              {% for i in programs.paginator.page_range %}
-                                  {% if programs.number == i %}
+                              {% for i in banks.paginator.page_range %}
+                                  {% if banks.number == i %}
                                     <li><a class="pagination-link is-current" aria-label="Goto page {{ i }}" aria-current="page">{{ i }}</a></li>
                                   {% else %}
                                       <li><a class="pagination-link" href="?page={{ i }}" aria-label="Goto page {{ i }}">{{ i }}</a></li>

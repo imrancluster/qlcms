@@ -7,14 +7,46 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-mobile has-text-centered">
-                    <p class="title is-4">{{ program.title}}</p>
+                    <p class="title is-4">{{ program.title}} - {{ program.date}}</p>
                     <p class="subtitle is-6">{{ program.place}}</p>
-                    <p><i class="fas fa-users"></i> <strong>85</strong> Members</p>
-                    <p>
-                        <i class="fas fa-female"></i></i> Female: <strong>55</strong>
-                        &nbsp;&nbsp;
-                        <i class="fas fa-male"></i> Male: <strong>30</strong>
-                    </p>
+                    <div class="program-presence-calculation is-pulled-right">
+                        <table class="table is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>Presence</th>
+                                    <th>Male</th>
+                                    <th>Femlae</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Pro-Master</td>
+                                    <td>{{ program_history.total_promaster_male }}</td>
+                                    <td>{{ program_history.total_promaster_female }}</td>
+                                    <td>{{ program_history.total_promaster }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Graduate</td>
+                                    <td>{{ program_history.total_graduate_male }}</td>
+                                    <td>{{ program_history.total_graduate_female }}</td>
+                                    <td>{{ program_history.total_graduate }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Associate</td>
+                                    <td>{{ program_history.total_associate_male }}</td>
+                                    <td>{{ program_history.total_associate_female }}</td>
+                                    <td>{{ program_history.total_associate }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total</strong></td>
+                                    <td>{{ program_history.total_male }}</td>
+                                    <td>{{ program_history.total_female }}</td>
+                                    <td>{{ program_history.total }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -22,33 +54,19 @@
                 <div class="column">
                     <div class="tabs">
                       <ul>
-                        <li class="tab is-active" onclick="openTab(event,'Presence')"><a>Presence</a></li>
-                        <li class="tab" onclick="openTab(event,'Absence')"><a>Absence</a></li>
+                        <li class="tab is-active" onclick="openTab(event,'Search')"><a>Search</a></li>
+                        <li class="tab" onclick="openTab(event,'Presence')"><a>Presence</a></li>
                       </ul>
                     </div>
                     <div class="container">
-                        <div id="Presence" class="content-tab" >
-                          <p>
-                            {{ member_attended }}
-                          </p>
+                        <div id="Search" class="content-tab" >
+
+                            {% include 'layout/partial/members.html' %}
+
                         </div>
-                        <div id="Absence" class="content-tab" style="display:none">
-                            <form action="/handle-program-attendance/" method="post">
-                                {% csrf_token %}
 
-                                {% for member in members %}
-                                    {{ member.name }} <input
-                                        type="checkbox"
-                                        class="checkbox"
-                                        name="attendance"
-                                        value="{{ member.id }}" {% if member.id in member_attended %} checked {% endif %}>
-                                    <br>
-                                {% endfor %}
-
-                                <input type="hidden" name="program_id" value="{{ program.id }}">
-
-                                <input class="button is-primary" type="submit" value="Add">
-                            </form>
+                        <div id="Presence" class="content-tab" style="display:none">
+                          {% include 'layout/partial/attended.html' %}
                         </div>
                     </div>
                 </div>

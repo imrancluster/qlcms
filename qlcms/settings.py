@@ -198,6 +198,7 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
     ]},
     {'label': _('Members'), 'items': [
         {'name': 'people.member'},
+        {'name': 'matirbank.matirbank'},
     ]},
     {'label': _('Events'), 'items': [
         {'name': 'events.programtype'},
