@@ -50,14 +50,14 @@
                                             </span>
                                         </a>
                                         {% if perms.people.change_member %}
-                                            <a href="{% url 'update_member' bank.id %}">
+                                            <a href="{% url 'update_bank' bank.id %}">
                                                 <span class="icon has-text-info">
                                                     <i class="fas fa-edit"></i>
                                                 </span>
                                             </a>
                                         {% endif %}
                                         {% if perms.people.delete_member %}
-                                            <a href="{% url 'delete_member' bank.id %}">
+                                            <a href="{% url 'delete_bank' bank.id %}">
                                                 <span class="icon has-text-danger">
                                                     <i class="fas fa-minus-circle"></i>
                                                 </span>

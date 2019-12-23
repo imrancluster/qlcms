@@ -9,7 +9,7 @@
                 <div class="column is-half">
                     <form method="post">
                         {% csrf_token %}
-                        <h2 class="title">Are you sure you want to delete the member "{{ member.name }}"?</h2>
+                        <h2 class="title">Are you sure you want to delete the matir bank "{{ matirbank.name }}"?</h2>
                         <input class="button is-primary" type="submit" value="Confirm">
                         <a class="button is-default" href="{% url 'members' %}">Cancel</a>
                     </form>

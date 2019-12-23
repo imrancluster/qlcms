@@ -55,6 +55,7 @@ class MemberCreateViews(UserPassesTestMixin, CreateView):
     def get_success_url(self, *args, **kwargs):
         return reverse("members")
 
+
 class MembeUpdateViews(UserPassesTestMixin, UpdateView):
     # class view will automatically create context = member
     model = Member
@@ -73,6 +74,7 @@ class MembeUpdateViews(UserPassesTestMixin, UpdateView):
     def get_success_url(self, *args, **kwargs):
         return reverse("members")
 
+
 class MembeDeleteViews(UserPassesTestMixin, DeleteView):
     model = Member
     template_name = 'member/delete.html'
@@ -83,11 +85,10 @@ class MembeDeleteViews(UserPassesTestMixin, DeleteView):
     def get_success_url(self, *args, **kwargs):
         return reverse("members")
 
+
 class MemberDetailViews(UserPassesTestMixin, DetailView):
     model = Member
     template_name = 'member/show.html'
-
-
 
     def test_func(self):
         return self.request.user.has_perm('people.view_member')

@@ -32,6 +32,7 @@ class MatirBanks(UserPassesTestMixin, TemplateView):
     def test_func(self):
         return self.request.user.has_perm('matirbank.view_matirbank')
 
+
 class MatirBankCreateViews(UserPassesTestMixin, CreateView):
     model = MatirBank
     template_name = 'matirbank/create.html'
@@ -49,6 +50,46 @@ class MatirBankCreateViews(UserPassesTestMixin, CreateView):
         branch_id = UserProfile.objects.filter(user=self.request.user)[0].branch.id
         form.save(branch_id, self.request.user.pk)
         return super(MatirBankCreateViews, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(MatirBankCreateViews, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user, 'formType': 'new'})
+        return kwargs
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse("banks")
+
+
+class MatirBankUpdateViews(UserPassesTestMixin, UpdateView):
+    # class view will automatically create context = member
+    model = MatirBank
+    template_name = 'matirbank/create.html'
+    form_class = MatirBankForm
+
+    def get_context_data(self, **kwargs):
+        context = super(MatirBankUpdateViews, self).get_context_data(**kwargs)
+        context['view_form_title'] = "Update matir bank"
+        context['form_type'] = 'update-form'
+        return context
+
+    def test_func(self):
+        return self.request.user.has_perm('matirbank.change_matirbank')
+
+    def get_form_kwargs(self):
+        kwargs = super(MatirBankUpdateViews, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user, 'formType': 'update'})
+        return kwargs
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse("banks")
+
+
+class MatirBankDeleteViews(UserPassesTestMixin, DeleteView):
+    model = MatirBank
+    template_name = 'matirbank/delete.html'
+
+    def test_func(self):
+        return self.request.user.has_perm('matirbank.delete_matirbank')
 
     def get_success_url(self, *args, **kwargs):
         return reverse("banks")
