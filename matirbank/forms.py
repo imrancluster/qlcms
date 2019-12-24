@@ -2,6 +2,7 @@ from string import Template
 
 from django import forms
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext as _
 
 from matirbank.models import MatirBank
 from people.models import Member, UserProfile
@@ -17,7 +18,7 @@ class MatirBankForm(forms.ModelForm):
     distribution_date = forms.DateField(widget=forms.SelectDateWidget())
     collection_date = forms.DateField(widget=forms.SelectDateWidget())
 
-    member = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'input'}))
+    member = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'input'}), empty_label=_("Select Member"))
     amount = forms.CharField(required=False, initial=0, widget=forms.TextInput(attrs={'class': 'input'}))
     status = forms.CharField(widget=forms.Select(choices=MATIR_BANK_STATUS, attrs={'class': 'input'}))
 
@@ -26,6 +27,7 @@ class MatirBankForm(forms.ModelForm):
         self.formType = kwargs.pop('formType')
 
         super(MatirBankForm, self).__init__(*args, **kwargs)
+
         branch_id = UserProfile.objects.filter(user=self.user)[0].branch.id
         self.fields['member'].queryset = Member.objects.filter(branch=branch_id).order_by('-pk')
 

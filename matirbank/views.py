@@ -19,7 +19,9 @@ class MatirBanks(UserPassesTestMixin, TemplateView):
         matirbank_list = MatirBank.objects.filter(branch=branch_id).order_by('-pk')
 
         # Django Filter
-        matirbank_filter = MatirBankFilter(self.request.GET, queryset=matirbank_list)
+        matirbank_filter = MatirBankFilter(self.request.GET, queryset=matirbank_list, user=self.request.user, request=self.request)
+
+
 
         context = super().get_context_data(**kwargs)
 
@@ -31,6 +33,13 @@ class MatirBanks(UserPassesTestMixin, TemplateView):
 
     def test_func(self):
         return self.request.user.has_perm('matirbank.view_matirbank')
+
+    # def get_filterset_kwargs(self, filterset_class):
+    #     kwargs = super(MatirBanks, self).get_filterset_kwargs(filterset_class)
+    #     kwargs['user'] = self.request.user
+    #     return kwargs
+
+
 
 
 class MatirBankCreateViews(UserPassesTestMixin, CreateView):
