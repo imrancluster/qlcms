@@ -8,4 +8,12 @@ $(function ($) {
             $('#id_registration_no').prop('disabled', false);
         }
     });
+
+    $('#id_status').change(function() {
+        if ($(this).val() == 'MONEY_RECEIPT') {
+            $('#id_money_receipt').show('slow');
+        } else {
+            $('#id_money_receipt').hide('slow');
+        }
+    });
 });

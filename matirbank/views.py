@@ -21,8 +21,6 @@ class MatirBanks(UserPassesTestMixin, TemplateView):
         # Django Filter
         matirbank_filter = MatirBankFilter(self.request.GET, queryset=matirbank_list, user=self.request.user, request=self.request)
 
-
-
         context = super().get_context_data(**kwargs)
 
         # members with filtering, members.form.as_p will work
@@ -33,11 +31,6 @@ class MatirBanks(UserPassesTestMixin, TemplateView):
 
     def test_func(self):
         return self.request.user.has_perm('matirbank.view_matirbank')
-
-    # def get_filterset_kwargs(self, filterset_class):
-    #     kwargs = super(MatirBanks, self).get_filterset_kwargs(filterset_class)
-    #     kwargs['user'] = self.request.user
-    #     return kwargs
 
 
 
@@ -102,3 +95,17 @@ class MatirBankDeleteViews(UserPassesTestMixin, DeleteView):
 
     def get_success_url(self, *args, **kwargs):
         return reverse("banks")
+
+
+class MatirBankDetailViews(UserPassesTestMixin, DetailView):
+    model = MatirBank
+    template_name = 'matirbank/show.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(MatirBankDetailViews, self).get_context_data(**kwargs)
+        bank = MatirBank.objects.get(id=self.kwargs.get('pk'))
+        context['bank_history'] = bank.bankhistory_set.all().order_by('-id')
+        return context
+
+    def test_func(self):
+        return self.request.user.has_perm('matirbank.view_matirbank')

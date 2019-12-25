@@ -24,7 +24,8 @@ from django.contrib.auth.views import LoginView
 
 from events.views import ProgramCreateViews, Programs, ProgramUpdateViews, ProgramDeleteViews, ProgramDetailViews, \
     handle_program_attendance
-from matirbank.views import MatirBanks, MatirBankCreateViews, MatirBankUpdateViews, MatirBankDeleteViews
+from matirbank.views import MatirBanks, MatirBankCreateViews, MatirBankUpdateViews, MatirBankDeleteViews, \
+    MatirBankDetailViews
 from qlcms import settings
 from . import views
 from people.views import *
@@ -61,6 +62,7 @@ urlpatterns = [
     path('dashboard/banks/create/', MatirBankCreateViews.as_view(), name='create_bank'),
     path('dashboard/banks/update/<int:pk>', MatirBankUpdateViews.as_view(), name='update_bank'),
     path('dashboard/banks/delete/<int:pk>', MatirBankDeleteViews.as_view(), name='delete_bank'),
+    path('dashboard/banks/show/<int:pk>', MatirBankDetailViews.as_view(), name='detail_bank'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -55,7 +55,7 @@
                   <ul>
                     <li class="tab is-active" onclick="openTab(event,'History')"><a>History</a></li>
                     <li class="tab" onclick="openTab(event,'Sadakayon')"><a>Sadakayon</a></li>
-                    <li class="tab" onclick="openTab(event,'Others')"><a>Others</a></li>
+                    <li class="tab" onclick="openTab(event,'Banks')"><a>Banks</a></li>
                   </ul>
                 </div>
                 <div class="container">
@@ -69,10 +69,20 @@
                             Sadakayon Content
                         </p>
                     </div>
-                    <div id="Others" class="content-tab" style="display:none">
-                        <p>
-                            Others Content
-                        </p>
+                    <div id="Banks" class="content-tab" style="display:none">
+                        <h2 class="title">All Bank Records</h2>
+                        <ul>
+                          {% for bank in banks %}
+                            <li>
+                                Bank Code: <a href="{% url 'detail_bank' bank.id %}">{{ bank.bank_code }}</a><br>
+                                <small>Distribution Date: {{ bank.distribution_date }}</small><br>
+                                <small>Collected Date: {{ bank.collection_date }}</small><br>
+                                <small>Amount: {{ bank.amount }}</small><br>
+                                <small>Status: {{ bank.status }}</small><br>
+                                <hr>
+                            </li>
+                          {% endfor %}
+                      </ul>
                     </div>
                 </div>
             </div>

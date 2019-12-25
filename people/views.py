@@ -90,5 +90,11 @@ class MemberDetailViews(UserPassesTestMixin, DetailView):
     model = Member
     template_name = 'member/show.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(MemberDetailViews, self).get_context_data(**kwargs)
+        member = Member.objects.get(id=self.kwargs.get('pk'))
+        context['banks'] = member.matirbank_set.all().order_by('-id')
+        return context
+
     def test_func(self):
         return self.request.user.has_perm('people.view_member')

@@ -1,15 +1,9 @@
-from string import Template
-
 from django import forms
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from matirbank.models import MatirBank
 from people.models import Member, UserProfile
-from people.utils import get_quantum_associate_id
-from qlcms import settings
-from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES, YEARS, \
-    MATIR_BANK_STATUS
+from qlcms.fields import MATIR_BANK_STATUS
 
 
 class MatirBankForm(forms.ModelForm):
@@ -18,9 +12,14 @@ class MatirBankForm(forms.ModelForm):
     distribution_date = forms.DateField(widget=forms.SelectDateWidget())
     collection_date = forms.DateField(widget=forms.SelectDateWidget())
 
-    member = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'input'}), empty_label=_("Select Member"))
+    member = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'input'}),
+                                    empty_label=_("Select Member"))
     amount = forms.CharField(required=False, initial=0, widget=forms.TextInput(attrs={'class': 'input'}))
     status = forms.CharField(widget=forms.Select(choices=MATIR_BANK_STATUS, attrs={'class': 'input'}))
+    money_receipt = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'input', 'style': 'display:none;margin-top:10px;',
+               'placeholder': 'Enter money receipt number'}),
+        label="", required=False)
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -33,6 +32,7 @@ class MatirBankForm(forms.ModelForm):
 
         if self.formType == 'new':
             del self.fields['collection_date']
+            del self.fields['money_receipt']
         else:
             # self.fields['member'].widget.attrs['class'] = 'nwe class name comma sep'
             self.fields['member'].disabled = True
@@ -40,10 +40,10 @@ class MatirBankForm(forms.ModelForm):
     class Meta:
         model = MatirBank
         fields = ('bank_code', 'family_code', 'distribution_date',
-                  'collection_date', 'member', 'amount', 'status')
+                  'collection_date', 'member', 'amount', 'status', 'money_receipt')
         # fields = '__all__'
 
-    def save(self, branch_id=None, user_id = None):
+    def save(self, branch_id=None, user_id=None):
         matirbank = super(MatirBankForm, self).save(commit=False)
 
         if branch_id:

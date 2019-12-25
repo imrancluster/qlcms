@@ -32,5 +32,5 @@ class MatirBankFilter(django_filters.FilterSet):
         fields = {
             'bank_code': ['exact'],
             'member': ['exact'],
-            'distribution_date': ['exact']
+            'status': ['exact']
         }
