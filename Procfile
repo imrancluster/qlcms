@@ -1,0 +1,1 @@
+web: gunicorn <qlcms>.wsgi --log-file -
