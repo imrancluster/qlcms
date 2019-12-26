@@ -1,0 +1,26 @@
+# Sample code for signals
+# create history using django signals
+# def create_bank_history(sender, **kwargs):
+#     bank = kwargs.get('instance', None)
+#     created = kwargs.get('created', False)
+#     raw = kwargs.get('raw', False)
+#
+#     # get request for logged in user
+#     import inspect
+#     for frame_record in inspect.stack():
+#         if frame_record[3] == 'get_response':
+#             request = frame_record[0].f_locals['request']
+#             login_user = request.user
+#             break
+#     else:
+#         login_user = None
+#
+#     if created is False:
+#         last_history = BankHistory.objects.filter(bank=bank.id).last()
+#         if last_history and last_history.status != bank.status:
+#             bank.bankhistory_set.create(status=bank.status, bank=bank, user=login_user)
+#     else:
+#         bank.bankhistory_set.create(status=bank.status, bank=bank, user=login_user)
+#
+#
+# post_save.connect(create_bank_history, sender=MatirBank)

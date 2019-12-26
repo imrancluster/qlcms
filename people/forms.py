@@ -5,7 +5,6 @@ from django.utils.safestring import mark_safe
 
 from people.models import Member
 from people.utils import get_quantum_associate_id
-from qlcms import settings
 from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES, YEARS
 
 
@@ -13,6 +12,7 @@ class PictureWidget(forms.widgets.Widget):
     def render(self, name, value, attrs=None, **kwargs):
         html =  Template("""<img src="/media/$link"/>""")
         return mark_safe(html.substitute(link=value))
+
 
 class MemberForm(forms.ModelForm):
     name = forms.CharField(min_length=2,

@@ -1,10 +1,6 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib.auth.models import User
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpRequest, HttpResponseRedirect
-from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, DetailView
-from django import forms
 from django.urls import reverse
 
 from events.filters import ProgramFilter
@@ -12,7 +8,7 @@ from events.forms import ProgramForm
 from events.models import Program
 from people.filters import MemberFilter
 from people.models import UserProfile, Member
-from events.utils import get_presence_members_by_program_id, get_presence_member_ids_by_program_id, get_program_history
+from events.utils import get_presence_members_by_program_id, get_program_history
 from qlcms.utils import get_custom_paginator, my_reverse
 
 

@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.utils import timezone
-from geography.models import Branch
 from geography.models import *
 from django.forms import Select
 from qlcms.fields import BOOLEAN_SELECT_CHOICES

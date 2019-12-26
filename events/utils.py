@@ -1,12 +1,11 @@
-from django.core.exceptions import ObjectDoesNotExist
-
 from events.models import Program
-from people.models import Member
+
 
 def get_presence_members_by_program_id(program_id):
     member_attended = Program.objects.get(id=program_id).members.all().order_by('-pk')
 
     return member_attended
+
 
 def get_presence_member_ids_by_program_id(program_id):
     attended = []
@@ -16,8 +15,8 @@ def get_presence_member_ids_by_program_id(program_id):
 
     return member_attended
 
-def get_program_history(program_id):
 
+def get_program_history(program_id):
     member_attended = Program.objects.get(id=program_id).members.all()
 
     total_promaster = []

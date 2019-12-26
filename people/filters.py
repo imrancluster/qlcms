@@ -1,5 +1,4 @@
 import django_filters
-# from django_filters import filterset
 
 from people.models import Member
 
