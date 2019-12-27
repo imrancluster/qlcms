@@ -8,7 +8,7 @@ class ProgramForm(forms.ModelForm):
     type = forms.ModelChoiceField(queryset=ProgramType.objects.all())
     title = forms.CharField(min_length=2,
                            widget=forms.TextInput(attrs={'class': 'input'}))
-    date = forms.DateField(widget=forms.SelectDateWidget())
+    date = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))
     place = forms.CharField(min_length=2,
                             widget=forms.TextInput(attrs={'class': 'input'}))
     phone = forms.CharField(required=False, min_length=8,

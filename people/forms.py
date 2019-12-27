@@ -21,7 +21,7 @@ class MemberForm(forms.ModelForm):
     registration_no = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input'}))
     gender = forms.CharField(widget=forms.Select(choices=GENDER_CHOICES, attrs={'class': 'input'}))
 
-    date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=YEARS))
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))
 
     phone = forms.CharField(min_length=11, max_length=13,
                            widget=forms.TextInput(attrs={'class': 'input'}))

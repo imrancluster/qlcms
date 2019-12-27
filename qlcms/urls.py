@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 from django.contrib.auth.views import LoginView
 
+
 from events.views import ProgramCreateViews, Programs, ProgramUpdateViews, ProgramDeleteViews, ProgramDetailViews, \
     handle_program_attendance
 from matirbank.views import MatirBanks, MatirBankCreateViews, MatirBankUpdateViews, MatirBankDeleteViews, \
@@ -34,10 +35,8 @@ urlpatterns = [
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path('admin/', admin.site.urls),
 
-    # path('', views.index),
-    path('', LoginView.as_view()),
+    path('', LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
-
     path('accounts/', include("django.contrib.auth.urls")),
 
     # Members

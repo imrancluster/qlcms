@@ -16,4 +16,9 @@ $(function ($) {
             $('#id_money_receipt').hide('slow');
         }
     });
+
+    $("#id_date_of_birth, #id_distribution_date, #id_collection_date, #id_date")
+        .datepicker({
+        format:'yyyy-mm-dd',
+    });
 });

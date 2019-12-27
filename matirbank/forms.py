@@ -9,8 +9,8 @@ from qlcms.fields import MATIR_BANK_STATUS
 class MatirBankForm(forms.ModelForm):
     bank_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
     family_code = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input'}))
-    distribution_date = forms.DateField(widget=forms.SelectDateWidget())
-    collection_date = forms.DateField(widget=forms.SelectDateWidget())
+    distribution_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))
+    collection_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))
 
     member = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'input'}),
                                     empty_label=_("Select Member"))

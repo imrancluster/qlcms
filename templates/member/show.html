@@ -2,6 +2,19 @@
 {% block header %}
     {% include 'layout/partial/navigation.html' %}
 {% endblock %}
+{% block breadcrumb %}
+    <div class="container">
+        <div class="column is-mobile">
+            <nav class="breadcrumb is-small is-right" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'members' %}">Members</a></li>
+                    <li class="is-active"><a href="{% url 'detail_member' member.id %}" aria-current="page">{{ member.name}}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
 {% block body %}
 
 <div class="member-section">
@@ -41,9 +54,9 @@
                 <div class="content is-small">
                     <p><i class="fas fa-map-marker-alt"></i> Bangladesh</p>
                     <p>
-                        <i class="far fa-calendar-alt"></i> Joined May 2011
+                        <i class="far fa-calendar-alt"></i> Joined {{ member.created_on }}
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong>331</strong> Programs
+                        <strong>0</strong> Programs
                     </p>
                 </div>
             </div>
@@ -60,9 +73,84 @@
                 </div>
                 <div class="container">
                     <div id="History" class="content-tab" >
-                      <p>
-                        History Content
-                      </p>
+                      <table class="table is-bordered">
+                          <tr>
+                              <td>Name</td>
+                              <td>{{ member.name }}</td>
+                          </tr>
+                          <tr>
+                              <td>Branch</td>
+                              <td>{{ member.branch }}</td>
+                          </tr>
+                          <tr>
+                              <td>Member Type</td>
+                              <td>{{ member.member_type }}</td>
+                          </tr>
+                          <tr>
+                              <td>Registration No</td>
+                              <td>{{ member.registration_no }}</td>
+                          </tr>
+                          <tr>
+                              <td>Gender</td>
+                              <td>{{ member.gender }}</td>
+                          </tr>
+                          <tr>
+                              <td>Date Of Birth</td>
+                              <td>{{ member.date_of_birth }}</td>
+                          </tr>
+                          <tr>
+                              <td>Phone</td>
+                              <td>{{ member.phone }}</td>
+                          </tr>
+                          <tr>
+                              <td>Address 1</td>
+                              <td>{{ member.address_1 }}</td>
+                          </tr>
+                          <tr>
+                              <td>Address 2</td>
+                              <td>{{ member.address_2 }}</td>
+                          </tr>
+                          <tr>
+                              <td>Marital Status</td>
+                              <td>{{ member.marital_status }}</td>
+                          </tr>
+                          <tr>
+                              <td>Occupation</td>
+                              <td>{{ member.occupation }}</td>
+                          </tr>
+                          <tr>
+                              <td>Blood Group</td>
+                              <td>{{ member.blood_group }}</td>
+                          </tr>
+                          <tr>
+                              <td>Email</td>
+                              <td>{{ member.email }}</td>
+                          </tr>
+                          <tr>
+                              <td>Reference Name</td>
+                              <td>{{ member.reference_name }}</td>
+                          </tr>
+                          <tr>
+                              <td>Additional Info</td>
+                              <td>{{ member.additional_info }}</td>
+                          </tr>
+                          <tr>
+                              <td>Status</td>
+                              <td>{{ member.status }}</td>
+                          </tr>
+                          <tr>
+                              <td>Quantier</td>
+                              <td>{{ member.is_quantier }}</td>
+                          </tr>
+                          <tr>
+                              <td>Created by</td>
+                              <td>{{ member.user }}</td>
+                          </tr>
+                          <tr>
+                              <td>Last updated</td>
+                              <td>{{ member.updated_on }}</td>
+                          </tr>
+                      </table>
                     </div>
                     <div id="Sadakayon" class="content-tab" style="display:none">
                         <p>
@@ -70,15 +158,15 @@
                         </p>
                     </div>
                     <div id="Banks" class="content-tab" style="display:none">
-                        <h2 class="title">All Bank Records</h2>
+                        <h2 class="title is-6">All Bank Records</h2>
                         <ul>
                           {% for bank in banks %}
                             <li>
                                 Bank Code: <a href="{% url 'detail_bank' bank.id %}">{{ bank.bank_code }}</a><br>
-                                <small>Distribution Date: {{ bank.distribution_date }}</small><br>
-                                <small>Collected Date: {{ bank.collection_date }}</small><br>
-                                <small>Amount: {{ bank.amount }}</small><br>
-                                <small>Status: {{ bank.status }}</small><br>
+                                <small>Distribution Date: {{ bank.distribution_date }}</small> /
+                                <small>Collected Date: {{ bank.collection_date }}</small> /
+                                <small>Amount: {{ bank.amount }}</small> /
+                                <small>Status: {{ bank.status }}</small>
                                 <hr>
                             </li>
                           {% endfor %}

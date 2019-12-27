@@ -1,7 +1,29 @@
 {% extends 'layout/base.html' %}
+{% load static %}
+
+{% block extracss %}
+    <!-- Fengyuan Chen's Datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+{% endblock %}
+
 {% block header %}
     {% include 'layout/partial/navigation.html' %}
 {% endblock %}
+
+{% block breadcrumb %}
+    <div class="container">
+        <div class="column is-mobile">
+            <nav class="breadcrumb is-small is-right" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'programs' %}">Programs</a></li>
+                    <li class="is-active"><a href="#" aria-current="page">Program</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
 {% block body %}
     <div class="member-section">
         <div class="container">
@@ -27,4 +49,9 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block extrajs %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+    <script  src="{% static 'js/app.js' %}"></script>
 {% endblock %}
