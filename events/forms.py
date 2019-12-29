@@ -1,11 +1,12 @@
 from django import forms
+from django.utils.translation import gettext as _
 from events.models import Program, ProgramType
 from people.models import UserProfile
 from qlcms.fields import PROGRAM_STATUS
 
 
 class ProgramForm(forms.ModelForm):
-    type = forms.ModelChoiceField(queryset=ProgramType.objects.all())
+    type = forms.ModelChoiceField(queryset=None, empty_label=_("Select Type"))
     title = forms.CharField(min_length=2,
                            widget=forms.TextInput(attrs={'class': 'input'}))
     date = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))

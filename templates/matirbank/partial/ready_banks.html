@@ -1,0 +1,41 @@
+<nav class="panel">
+  <p class="panel-heading">
+    Matir Bank
+  </p>
+
+  <div class="panel-block">
+     <div class="tabs">
+      <ul>
+        <li class="tab is-active" onclick="openTab(event,'ReadyBanks')"><a>Ready Banks</a></li>
+        <li class="tab" onclick="openTab(event,'Others')"><a>Others</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="ReadyBanks" class="content-tab">
+      <div class="panel-block">
+          <button class="button" id="refreshReadyBank">Refresh Ready Banks</button>
+           Total {{ total_banks }}
+      </div>
+      {% for bank in banks %}
+          <div class="panel-block">
+            <span class="panel-icon">
+              <i class="far fa-gem" aria-hidden="true"></i>
+            </span>
+            <span>
+                <a href="{% url 'detail_bank' bank.id %}">{{ bank.bank_code }}</a>
+                - {{ bank.member.name }}
+                - {{ bank.member.phone }}
+                - <a href="">Contact History</a>
+            </span>
+          </div>
+      {% endfor %}
+  </div>
+
+  <div id="Others" class="content-tab" style="display:none">
+      <div class="panel-block">
+        Others Reports
+      </div>
+  </div>
+
+</nav>

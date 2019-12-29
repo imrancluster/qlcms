@@ -62,5 +62,9 @@ urlpatterns = [
     path('dashboard/banks/delete/<int:pk>', MatirBankDeleteViews.as_view(), name='delete_bank'),
     path('dashboard/banks/show/<int:pk>', MatirBankDetailViews.as_view(), name='detail_bank'),
 
+    path('ready-banks/', views.ready_banks, name='ready_banks'),
+
+
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

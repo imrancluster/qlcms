@@ -1,7 +1,44 @@
 {% extends 'layout/base.html' %}
+{% load static %}
+
 {% block header %}
     {% include 'layout/partial/navigation.html' %}
 {% endblock %}
 {% block body %}
 
+    <div class="container">
+        <div class="columns">
+          <div class="column">
+              <div id="wrapper">
+                  {% include 'matirbank/partial/ready_banks.html' %}
+              </div>
+          </div>
+
+          <div class="column">
+            Second Section
+          </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block extrajs %}
+    <script>
+        $(function ($) {
+            $('#refreshReadyBank').click(function() {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/ready-banks/',
+                    beforeSend: function() { $('#refreshReadyBank').addClass('is-loading');},
+                    complete: function() { $('#refreshReadyBank').removeClass('is-loading');},
+                    data: {csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),},
+                    success: function (response) {
+                        $("#wrapper").html(response);
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
