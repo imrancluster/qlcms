@@ -9,13 +9,13 @@
     <div class="container">
         <div class="columns">
           <div class="column">
-              <div id="wrapper">
+              <div id="bank-wrapper">
                   {% include 'matirbank/partial/ready_banks.html' %}
               </div>
           </div>
 
           <div class="column">
-            Second Section
+            {% include 'matirbank/partial/sadakayon_history.html' %}
           </div>
         </div>
     </div>
@@ -26,7 +26,8 @@
 {% block extrajs %}
     <script>
         $(function ($) {
-            $('#refreshReadyBank').click(function() {
+            $(document).on("click", '#refreshReadyBank', function(e) {
+                console.log(' ready bank clicked');
 
                 $.ajax({
                     type: 'POST',
@@ -35,7 +36,7 @@
                     complete: function() { $('#refreshReadyBank').removeClass('is-loading');},
                     data: {csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),},
                     success: function (response) {
-                        $("#wrapper").html(response);
+                        $("#bank-wrapper").html(response);
                     }
                 });
             });
