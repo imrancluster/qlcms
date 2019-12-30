@@ -18,6 +18,8 @@ class MemberAdmin(admin.ModelAdmin):
     # readonly_fields = ['branch_code']
     list_display_links = ['name']
 
+
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     pass
+

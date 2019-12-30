@@ -22,6 +22,9 @@ class MatirBank(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return '{}'.format(self.bank_code)
+
 
 class BankHistory(models.Model):
     status = models.CharField(max_length=20, null=True, blank=True)
@@ -29,3 +32,6 @@ class BankHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Bank Histories'

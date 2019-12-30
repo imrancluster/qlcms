@@ -10,7 +10,7 @@ from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHO
 
 class PictureWidget(forms.widgets.Widget):
     def render(self, name, value, attrs=None, **kwargs):
-        html =  Template("""<img src="/media/$link"/>""")
+        html = Template("""<img src="/media/$link"/>""")
         return mark_safe(html.substitute(link=value))
 
 
@@ -58,7 +58,7 @@ class MemberForm(forms.ModelForm):
             member.user_id = user_id
 
         if member.member_type == "QA" and member.registration_no == "":
-            member.registration_no = str(branch_id)+str(get_quantum_associate_id(branch_id))
+            member.registration_no = get_quantum_associate_id(branch_id)
         member.save()
 
         return member

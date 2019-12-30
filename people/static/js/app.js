@@ -22,4 +22,7 @@ $(function ($) {
         format:'yyyy-mm-dd',
     });
 
+    // Matir Bank
+    $('#id_bank_code').val('AUTO').prop('disabled', true);
+
 });

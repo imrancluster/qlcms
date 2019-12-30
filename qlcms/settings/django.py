@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'geography.apps.GeographyConfig',
     'people.apps.PeopleConfig',
     'events.apps.EventsConfig',
+    'helpers.apps.HelpersConfig'
 ]
 
 MIDDLEWARE = [

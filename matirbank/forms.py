@@ -3,11 +3,12 @@ from django.utils.translation import gettext as _
 
 from matirbank.models import MatirBank
 from people.models import Member, UserProfile
+from people.utils import get_matir_bank_code
 from qlcms.fields import MATIR_BANK_STATUS
 
 
 class MatirBankForm(forms.ModelForm):
-    bank_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'input'}))
+    bank_code = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input'}))
     family_code = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input'}))
     distribution_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))
     collection_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))
@@ -48,6 +49,9 @@ class MatirBankForm(forms.ModelForm):
 
         if branch_id:
             matirbank.branch_id = branch_id
+
+            # auto generated matir bank code number
+            matirbank.bank_code = get_matir_bank_code(branch_id)
         if user_id:
             matirbank.user_id = user_id
 

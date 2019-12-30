@@ -48,6 +48,7 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
     {'label': _('Members'), 'items': [
         {'name': 'people.member'},
         {'name': 'matirbank.matirbank'},
+        {'name': 'matirbank.bankhistory'},
     ]},
     {'label': _('Events'), 'items': [
         {'name': 'events.programtype'},
@@ -55,6 +56,7 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
     ]},
     {'label': _('Geography'), 'items': [
         {'name': 'geography.branch'},
+        {'name': 'helpers.identification'},
         {'name': 'geography.area'},
         {'name': 'geography.district'},
         {'name': 'geography.division'},
