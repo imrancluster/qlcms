@@ -24,7 +24,7 @@
             </span>
             <span>
                 <a href="{% url 'detail_bank' bank.id %}">{{ bank.bank_code }}</a>
-                - {{ bank.member.name }}
+                - {{ bank.member.name }}({{ bank.member.member_type }})
                 - {{ bank.member.phone }}
                 - <a href="">Contact History</a>
             </span>

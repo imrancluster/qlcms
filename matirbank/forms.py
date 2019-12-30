@@ -11,7 +11,7 @@ class MatirBankForm(forms.ModelForm):
     bank_code = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input'}))
     family_code = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input'}))
     distribution_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))
-    collection_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'input'}))
+    collection_date = forms.DateField(required=False, widget=forms.DateInput(attrs={'class': 'input'}))
 
     member = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'input'}),
                                     empty_label=_("Select Member"))
@@ -50,8 +50,10 @@ class MatirBankForm(forms.ModelForm):
         if branch_id:
             matirbank.branch_id = branch_id
 
-            # auto generated matir bank code number
-            matirbank.bank_code = get_matir_bank_code(branch_id)
+            if self.formType == 'new':
+                # auto generated matir bank code number
+                matirbank.bank_code = get_matir_bank_code(branch_id)
+
         if user_id:
             matirbank.user_id = user_id
 

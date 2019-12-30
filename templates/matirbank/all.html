@@ -41,7 +41,7 @@
                                     <td>{{ bank.bank_code }}</td>
                                     <td>{{ bank.distribution_date }}</td>
                                     <td>{{ bank.collection_date }}</td>
-                                    <td><a href="{% url 'detail_member' bank.member.pk %}">{{ bank.member.name }}</a></td>
+                                    <td><a href="{% url 'detail_member' bank.member.pk %}">{{ bank.member.name }}({{ bank.member.member_type }})</a></td>
                                     <td>{{ bank.amount }}</td>
                                     <td>
                                         {{ bank.status }}

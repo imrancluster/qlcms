@@ -41,6 +41,7 @@ class MatirBankCreateViews(UserPassesTestMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(MatirBankCreateViews, self).get_context_data(**kwargs)
         context['view_form_title'] = "Add new bank"
+        context['form_type'] = 'new-form'
         return context
 
     def test_func(self):

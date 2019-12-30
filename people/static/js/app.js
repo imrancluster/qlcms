@@ -23,6 +23,6 @@ $(function ($) {
     });
 
     // Matir Bank
-    $('#id_bank_code').val('AUTO').prop('disabled', true);
+    $('.new-form #id_bank_code').val('AUTO').prop('disabled', true);
 
 });

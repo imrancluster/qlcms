@@ -16,7 +16,7 @@ def ready_banks(request):
     # @TODO: need to check authentication
 
     if request.is_ajax():
-        ready_banks = get_ready_banks(request.user, 10)
+        ready_banks = get_ready_banks(request.user, 30)
         return render(request, 'matirbank/partial/ready_banks.html', context={
             'banks': ready_banks,
             'total_banks': len(ready_banks)
