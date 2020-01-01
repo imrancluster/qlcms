@@ -17,5 +17,5 @@ SECRET_KEY = 'ay3x4zt&ov-3z$xdzg*b2p9ey@b7deo_s3tb&54x8xcp1dbzq0'
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '35.186.157.156']
 INTERNAL_IPS = ['127.0.0.1']
