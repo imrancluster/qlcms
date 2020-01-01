@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 from qlcms.fields import PROGRAM_STATUS
 
+
 class ProgramType(models.Model):
     name = models.CharField(max_length=150)
     branch = models.ForeignKey('geography.Branch', on_delete=models.CASCADE)
@@ -13,6 +14,7 @@ class ProgramType(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.name, self.branch.name)
+
 
 class Program(models.Model):
     type = models.ForeignKey('ProgramType', on_delete=models.CASCADE)

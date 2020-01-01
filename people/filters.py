@@ -1,6 +1,6 @@
 import django_filters
 
-from people.models import Member
+from people.models import Member, Contact
 
 
 class MemberFilter(django_filters.FilterSet):
@@ -12,4 +12,13 @@ class MemberFilter(django_filters.FilterSet):
             'name': ['icontains'],
             'registration_no': ['exact'],
             'phone': ['exact']
+        }
+
+
+class ContactFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = Contact
+        fields = {
+            'type': ['exact'],
         }

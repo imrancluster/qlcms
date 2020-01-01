@@ -25,4 +25,10 @@ $(function ($) {
     // Matir Bank
     $('.new-form #id_bank_code').val('AUTO').prop('disabled', true);
 
+    // Add Contact Modal
+    $('#add-contact-modal').click(function(e) {
+        e.preventDefault();
+        $(this).addClass('is-active');
+    })
+
 });

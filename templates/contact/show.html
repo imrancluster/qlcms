@@ -1,0 +1,47 @@
+{% extends 'layout/base.html' %}
+{% block header %}
+    {% include 'layout/partial/navigation.html' %}
+{% endblock %}
+{% block breadcrumb %}
+    <div class="container">
+        <div class="column is-mobile">
+            <nav class="breadcrumb is-small is-right" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'contacts' %}">Members</a></li>
+                    <li class="is-active"><a href="{% url 'detail_contact' contact.id %}" aria-current="page">{{ contact.name}}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+
+<div class="member-section">
+    <div class="container">
+        <div class="columns is-mobile">
+          <div class="column">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-128x128">
+                    <img class="is-rounded" width="50px" src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">{{ contact.member}}</p>
+                <p class="subtitle is-6">
+                    <i class="far fa-envelope"></i> {{ contact.type }}
+                    <br>
+                    <br>
+                    {% if contact.feedback %}
+                        {{ contact.feedback }}
+                    {% endif %}
+                </p>
+                <p class="title is-4"><a href="{% url 'update_contact' contact.id %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-user-edit"></i></a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

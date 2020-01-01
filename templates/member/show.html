@@ -44,6 +44,7 @@
                     {% endif %}
                 </p>
                 <p class="title is-4"><a href="{% url 'update_member' member.id %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-user-edit"></i></a></p>
+                <p class="title is-4"><button class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-plus-circle"></i> Add Contact</button></p>
               </div>
             </div>
           </div>
@@ -178,4 +179,23 @@
 
     </div>
 </div>
+
+
+<div class="modal" id="add-contact-modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Modal title</p>
+      <button class="delete" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+      <h3>Halum</h3>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success">Save changes</button>
+      <button class="button">Cancel</button>
+    </footer>
+  </div>
+</div>
+
 {% endblock %}

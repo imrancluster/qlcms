@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES
+from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES, \
+    MEMBER_CONTACT_TYPE_CHOICES
 
 
 class Member(models.Model):
@@ -45,3 +46,13 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Contact(models.Model):
+    member = models.ForeignKey('people.Member', on_delete=models.CASCADE)
+    type = models.CharField(max_length=30, choices=MEMBER_CONTACT_TYPE_CHOICES)
+    feedback = models.TextField(blank=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+

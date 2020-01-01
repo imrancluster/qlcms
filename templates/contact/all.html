@@ -1,0 +1,93 @@
+{% extends 'layout/base.html' %}
+{% block header %}
+    {% include 'layout/partial/navigation.html' %}
+{% endblock %}
+{% block body %}
+    <div class="member-section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <div class="header">
+                        <p class="title is-4">Member Contacts</p>
+                    </div>
+                    <div class="header">
+                        <a href="{% url 'create_contact' %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-plus-circle"></i></a>
+                    </div>
+
+                    <div class="filter-section">
+                        <form method="get">
+                            {{ filter.form.as_p }}
+                            <div class="member-create-submit">
+                                <button class="button is-info" type="submit">Search</button>
+                                <a class="button is-default" href="{% url 'contacts' %}">Reset</a>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table is-fullwidth is-hoverable">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Type</th>
+                                <th>Feedback</th>
+                                <th>Created by</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in contacts %}
+                                <tr>
+                                    <td>{{ contact.member.name }}({{ contact.member.registration_no }})</td>
+                                    <td>{{ contact.type }}</td>
+                                    <td>{{ contact.feedback }}</td>
+                                    <td>{{ contact.user }}</td>
+                                    <td>
+                                        <a href="{% url 'detail_contact' contact.id %}">
+                                            <span class="icon has-text-info">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
+                                        </a>
+                                        {% if perms.people.change_member %}
+                                            <a href="{% url 'update_contact' contact.id %}">
+                                                <span class="icon has-text-info">
+                                                    <i class="fas fa-edit"></i>
+                                                </span>
+                                            </a>
+                                        {% endif %}
+                                        {% if perms.people.delete_member %}
+                                            <a href="{% url 'delete_contact' contact.id %}">
+                                                <span class="icon has-text-danger">
+                                                    <i class="fas fa-minus-circle"></i>
+                                                </span>
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if contacts.has_other_pages %}
+                        <nav class="pagination" role="navigation" aria-label="pagination">
+                        {% if contacts.has_previous %}
+                          <a class="pagination-previous" href="?page={{ contacts.previous_page_number }}">Previous</a>
+                        {% endif %}
+                        {% if contacts.has_next %}
+                          <a class="pagination-next" href="?page={{ contacts.next_page_number }}">Next page</a>
+                        {% endif %}
+
+                          <ul class="pagination-list">
+                              {% for i in contacts.paginator.page_range %}
+                                  {% if contacts.number == i %}
+                                    <li><a class="pagination-link is-current" aria-label="Goto page {{ i }}" aria-current="page">{{ i }}</a></li>
+                                  {% else %}
+                                      <li><a class="pagination-link" href="?page={{ i }}" aria-label="Goto page {{ i }}">{{ i }}</a></li>
+                                  {% endif %}
+                              {% endfor %}
+                          </ul>
+                        </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

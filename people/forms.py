@@ -1,9 +1,10 @@
 from string import Template
 
 from django import forms
+from django.utils.translation import gettext as _
 from django.utils.safestring import mark_safe
 
-from people.models import Member
+from people.models import Member, UserProfile, Contact
 from people.utils import get_quantum_associate_id
 from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES, YEARS
 
@@ -62,3 +63,28 @@ class MemberForm(forms.ModelForm):
         member.save()
 
         return member
+
+
+class ContactForm(forms.ModelForm):
+    member = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'input'}),
+                                    empty_label=_("Select Member"))
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+
+        super(ContactForm, self).__init__(*args, **kwargs)
+        branch_id = UserProfile.objects.filter(user=self.user)[0].branch.id
+        self.fields['member'].queryset = Member.objects.filter(branch=branch_id).order_by('-pk')
+
+    class Meta:
+        model = Contact
+        fields = ('member', 'type', 'feedback')
+
+    def save(self, user_id=None):
+        contact = super(ContactForm, self).save(commit=False)
+
+        if user_id:
+            contact.user_id = user_id
+        contact.save()
+
+        return contact

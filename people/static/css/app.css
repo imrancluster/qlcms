@@ -75,5 +75,20 @@ body, button, input, select, textarea {
     height: 200px;
     padding: 50px 0;
 }
-
 ul.errorlist {color: brown;}
+
+/** form styling */
+.member-section-form form  p {
+    position: relative;
+    margin-bottom: 10px;
+}
+.member-section-form form  p label {
+    width: 25%;
+    display: inline-block;
+}
+.member-section-form form  p input,
+.member-section-form form  p select,
+.member-section-form form  p textarea {
+    width: 74%;
+    display: inline-block;
+}

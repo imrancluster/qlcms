@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url, include, handler403
 from django.contrib import admin
 from django.urls import path
 
@@ -29,6 +29,11 @@ from matirbank.views import MatirBanks, MatirBankCreateViews, MatirBankUpdateVie
 from qlcms import settings
 from . import views
 from people.views import *
+
+# handler404 = 'myappname.views.error_404'
+# handler500 = 'myappname.views.error_500'
+handler403 = 'helpers.views.error_403'
+# handler400 = 'myappname.views.error_400'
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
@@ -64,7 +69,11 @@ urlpatterns = [
 
     path('ready-banks/', views.ready_banks, name='ready_banks'),
 
-
-
+    # Contact
+    path('dashboard/contacts/', Contacts.as_view(), name='contacts'),
+    path('dashboard/contacts/create/', ContactCreateViews.as_view(), name='create_contact'),
+    path('dashboard/contacts/update/<int:pk>', ContactUpdateViews.as_view(), name='update_contact'),
+    path('dashboard/contacts/delete/<int:pk>', ContactDeleteViews.as_view(), name='delete_contact'),
+    path('dashboard/contacts/show/<int:pk>', ContactDetailViews.as_view(), name='detail_contact'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

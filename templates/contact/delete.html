@@ -1,0 +1,33 @@
+{% extends 'layout/base.html' %}
+{% block header %}
+    {% include 'layout/partial/navigation.html' %}
+{% endblock %}
+{% block breadcrumb %}
+    <div class="container">
+        <div class="column is-mobile">
+            <nav class="breadcrumb is-small is-right" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'contacts' %}">Members</a></li>
+                    <li class="is-active"><a href="{% url 'detail_contact' contact.id %}" aria-current="page">{{ contact.member.name }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+<div class="member-section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-half">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h2 class="title">Are you sure you want to delete the contact for "{{ contact.member.name }}"?</h2>
+                        <input class="button is-primary" type="submit" value="Confirm">
+                        <a class="button is-default" href="{% url 'contacts' %}">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
