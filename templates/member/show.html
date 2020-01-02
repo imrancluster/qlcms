@@ -1,4 +1,6 @@
 {% extends 'layout/base.html' %}
+{% load static %}
+
 {% block header %}
     {% include 'layout/partial/navigation.html' %}
 {% endblock %}
@@ -44,7 +46,7 @@
                     {% endif %}
                 </p>
                 <p class="title is-4"><a href="{% url 'update_member' member.id %}" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-user-edit"></i></a></p>
-                <p class="title is-4"><button class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-plus-circle"></i> Add Contact</button></p>
+                <p class="title is-4"><button id="openContactModel" class="button is-primary is-medium is-rounded is-pulled-right"><i class="fas fa-plus-circle"></i> Add Contact</button></p>
               </div>
             </div>
           </div>
@@ -70,6 +72,7 @@
                     <li class="tab is-active" onclick="openTab(event,'History')"><a>History</a></li>
                     <li class="tab" onclick="openTab(event,'Sadakayon')"><a>Sadakayon</a></li>
                     <li class="tab" onclick="openTab(event,'Banks')"><a>Banks</a></li>
+                    <li class="tab" onclick="openTab(event,'ContactHistory')"><a>Contact History</a></li>
                   </ul>
                 </div>
                 <div class="container">
@@ -173,6 +176,18 @@
                           {% endfor %}
                       </ul>
                     </div>
+                    <div id="ContactHistory" class="content-tab" style="display:none">
+                        <h2 class="title is-6">All Contact History</h2>
+                        <ul>
+                          {% for contact in contacts %}
+                            <li>
+                                Type: {{ contact.type }}<br>
+                                <small>Feedback: <strong>{{ contact.feedback }}</strong>, Contacted at: {{ contact.created_on }}</small>
+                                <hr>
+                            </li>
+                          {% endfor %}
+                      </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -185,17 +200,33 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Modal title</p>
+      <p class="modal-card-title">Add New Contact</p>
       <button class="delete" aria-label="close"></button>
     </header>
     <section class="modal-card-body">
-      <h3>Halum</h3>
+        <div class="columns">
+            <div class="column is-full">
+                <form class="add-contact-form" action="{% url 'add_new_contact' %}" method="POST">
+
+                    {% csrf_token %}
+                    {{ simple_contact_form.as_p }}
+
+                    <div class="member-contact-submit">
+                        <input type="hidden" name="member" value="{{ member.id }}">
+                        <input class="button is-primary" type="submit" value="Add">
+                        <a class="button is-default" href="{% url 'contacts' %}">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </section>
-    <footer class="modal-card-foot">
-      <button class="button is-success">Save changes</button>
-      <button class="button">Cancel</button>
-    </footer>
   </div>
 </div>
 
+{% endblock %}
+
+{% block extrajs %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+    <script  src="{% static 'js/app.js' %}"></script>
 {% endblock %}

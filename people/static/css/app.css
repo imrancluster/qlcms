@@ -92,3 +92,6 @@ ul.errorlist {color: brown;}
     width: 74%;
     display: inline-block;
 }
+
+/** Contact Form */
+.add-contact-form #id_feedback {height: 100px; margin-bottom: 30px;}

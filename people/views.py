@@ -1,9 +1,14 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.exceptions import ValidationError
+from django.db import InternalError
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse
 
+from django.http import HttpRequest, HttpResponse
+
 from people.filters import MemberFilter, ContactFilter
-from people.forms import MemberForm, ContactForm
+from people.forms import MemberForm, ContactForm, SimpleContactForm
 from people.models import Member, UserProfile, Contact
 from qlcms.utils import get_custom_paginator
 
@@ -90,6 +95,9 @@ class MemberDetailViews(UserPassesTestMixin, DetailView):
         context = super(MemberDetailViews, self).get_context_data(**kwargs)
         member = Member.objects.get(id=self.kwargs.get('pk'))
         context['banks'] = member.matirbank_set.all().order_by('-id')
+        context['simple_contact_form'] = SimpleContactForm()
+        context['contacts'] = Contact.objects.filter(member=member).order_by('-id')[:5]
+
         return context
 
     def test_func(self):
@@ -190,3 +198,22 @@ class ContactDetailViews(UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return self.request.user.has_perm('people.view_contact')
+
+
+def add_new_contact(request):
+    if str(request.method).lower() == 'post':
+
+        form = SimpleContactForm(request.POST)
+        if form.is_valid():
+            try:
+                contact = Contact(member_id=form.data.get('member'),
+                                  type=form.data.get('type'),
+                                  feedback=form.data.get('feedback'),
+                                  user=request.user)
+                contact.save()
+            except InternalError:
+                pass
+    else:
+        raise ValidationError('You have to write something!')
+
+    return redirect(reverse("detail_member", kwargs={'pk': form.data.get('member')}))

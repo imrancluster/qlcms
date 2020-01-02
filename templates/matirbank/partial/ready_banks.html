@@ -26,7 +26,7 @@
                 <a href="{% url 'detail_bank' bank.id %}">{{ bank.bank_code }}</a>
                 - {{ bank.member.name }}({{ bank.member.member_type }})
                 - {{ bank.member.phone }}
-                - <a href="">Contact History</a>
+                - <a href="{% url 'detail_member' bank.member.id %}" target="_blank">Contact History</a>
             </span>
           </div>
       {% endfor %}

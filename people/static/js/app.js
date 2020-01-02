@@ -26,9 +26,8 @@ $(function ($) {
     $('.new-form #id_bank_code').val('AUTO').prop('disabled', true);
 
     // Add Contact Modal
-    $('#add-contact-modal').click(function(e) {
-        e.preventDefault();
-        $(this).addClass('is-active');
+    $('#openContactModel, #add-contact-modal .delete').click(function(e) {
+        $('#add-contact-modal').toggleClass('is-active');
     })
 
 });

@@ -10,9 +10,9 @@ from matirbank.helper import get_ready_banks
 def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'home/index.html')
 
-@csrf_exempt
-def ready_banks(request):
 
+@csrf_exempt
+def ready_banks(request: HttpRequest) -> HttpResponse:
     # @TODO: need to check authentication
 
     if request.is_ajax():

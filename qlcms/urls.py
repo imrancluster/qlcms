@@ -76,4 +76,6 @@ urlpatterns = [
     path('dashboard/contacts/delete/<int:pk>', ContactDeleteViews.as_view(), name='delete_contact'),
     path('dashboard/contacts/show/<int:pk>', ContactDetailViews.as_view(), name='detail_contact'),
 
+    path('dashboard/contacts/new/', add_new_contact, name='add_new_contact'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

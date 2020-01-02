@@ -6,7 +6,8 @@ from django.utils.safestring import mark_safe
 
 from people.models import Member, UserProfile, Contact
 from people.utils import get_quantum_associate_id
-from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES, YEARS
+from qlcms.fields import MEMBER_TYPE_CHOICES, GENDER_CHOICES, MARITAL_STATUS_CHOICES, BLOOD_GROUP_CHOICES, YEARS, \
+    MEMBER_CONTACT_TYPE_CHOICES
 
 
 class PictureWidget(forms.widgets.Widget):
@@ -88,3 +89,12 @@ class ContactForm(forms.ModelForm):
         contact.save()
 
         return contact
+
+
+class SimpleContactForm(forms.ModelForm):
+    type = forms.CharField(widget=forms.Select(choices=MEMBER_CONTACT_TYPE_CHOICES, attrs={'class': 'input'}))
+    feedback = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'input'}))
+
+    class Meta:
+        model = Contact
+        fields = ('type', 'feedback')

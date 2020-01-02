@@ -36,7 +36,9 @@
                         <tbody>
                             {% for contact in contacts %}
                                 <tr>
-                                    <td>{{ contact.member.name }}({{ contact.member.registration_no }})</td>
+                                    <td>
+                                        <a href="{% url 'detail_member' contact.member.id %}">{{ contact.member.name }}({{ contact.member.registration_no }})</a>
+                                    </td>
                                     <td>{{ contact.type }}</td>
                                     <td>{{ contact.feedback }}</td>
                                     <td>{{ contact.user }}</td>
